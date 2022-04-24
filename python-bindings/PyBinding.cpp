@@ -38,7 +38,7 @@ class F16Plant {
  public:
     numpy::ndarray dxdt(const numpy::ndarray &x,
                           const numpy::ndarray &uinput){
-      F16Components::f16_state_type xd;
+      F16Components::f16_full_type xd;
       F16Components::f16_state_type xa = ndarray_to_array<double, 13>(x);
       F16Components::f16_input_type ua = ndarray_to_array<double, 4>(uinput);
 
@@ -46,8 +46,8 @@ class F16Plant {
       plant.subf16_model(xa, ua, xd);
 
       Py_intptr_t  shape[1] = { xd.size() };
-      numpy::ndarray result = numpy::zeros(1, shape, numpy::dtype::get_builtin<float>());
-      std::copy(xd.begin(), xd.end(), reinterpret_cast<float*>(result.get_data()));
+      numpy::ndarray result = numpy::zeros(1, shape, numpy::dtype::get_builtin<double>());
+      std::copy(xd.begin(), xd.end(), reinterpret_cast<double*>(result.get_data()));
       return result;
     }
   };

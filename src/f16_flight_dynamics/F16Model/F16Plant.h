@@ -11,6 +11,9 @@ namespace F16Components {
 /* sized array to store aircraft state */
 typedef boost::array<double, 13> f16_state_type;
 
+/* sized array to store aircraft state + output */
+typedef boost::array<double, 17> f16_full_type;
+
 /* sized array to store aircraft input */
 typedef boost::array<double, 4> f16_input_type;
 
@@ -18,24 +21,24 @@ typedef boost::array<double, 4> f16_input_type;
  * a data structure of constants - maybe want to have the user configure this?
  */
 struct F16PlantParameters {
-  const float xcg = 0.35f;
-  const float s = 300.0f;
-  const float b = 30.0f;
-  const float cbar = 11.32f;
-  const float rm = 1.57e-3f;
-  const float xcgr = .35f;
-  const float he = 160.0f;
-  const float c1 = -.770f;
-  const float c2 = .02755f;
-  const float c3 = 1.055e-4f;
-  const float c4 = 1.642e-6f;
-  const float c5 = .9604f;
-  const float c6 = 1.759e-2f;
-  const float c7 = 1.792e-5f;
-  const float c8 = -.7336f;
-  const float c9 = 1.587e-5f;
-  const float rtod = 57.29578f;
-  const float g = 32.17f;
+  const double xcg = 0.35f;
+  const double s = 300.0f;
+  const double b = 30.0f;
+  const double cbar = 11.32f;
+  const double rm = 1.57e-3f;
+  const double xcgr = .35f;
+  const double he = 160.0f;
+  const double c1 = -.770f;
+  const double c2 = .02755f;
+  const double c3 = 1.055e-4f;
+  const double c4 = 1.642e-6f;
+  const double c5 = .9604f;
+  const double c6 = 1.759e-2f;
+  const double c7 = 1.792e-5f;
+  const double c8 = -.7336f;
+  const double c9 = 1.587e-5f;
+  const double rtod = 57.29578f;
+  const double g = 32.17f;
 };
 
 F16PlantParameters F16Val = F16PlantParameters();
@@ -60,8 +63,8 @@ class F16Plant {
    */
   void subf16_model(const f16_state_type &x,
                     const f16_input_type &uinput,
-                    f16_state_type &dxdt,
-                    EngineModelType model_type = STEVENS,
+                    f16_full_type &dxdt,
+                    EngineModelType model_type = MORELLI,
                     bool adjust_cy = true);
 
 };

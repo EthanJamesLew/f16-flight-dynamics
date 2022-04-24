@@ -11,21 +11,21 @@ using namespace LowLevelFunctions;
 
 void F16Plant::subf16_model(const f16_state_type &x,
                             const f16_input_type &uinput,
-                            f16_state_type &dxdt,
+                            f16_full_type &dxdt,
                             EngineModelType model_type,
                             bool adjust_cy) {
 
-  float thtlc, el, ail, rdr;
-  float vt, alpha, beta, phi, theta, psi, p, q, r, alt, power;
-  float amach, qbar, cpow;
-  float t, dail, drdr;
-  float cxt, cyt, czt, clt, cmt, cnt;
-  float tvt, b2v, cq;
-  float t1, t2, t3, s1, s2, s3, s4, s5, s6, s7, s8;
-  float cbta, u, v, w, sth, cth, sph, cph, spsi, cpsi, qs, qsb, rmqs, gcth, qsph, ay, az;
-  float udot, vdot, wdot, dum;
+  double thtlc, el, ail, rdr;
+  double vt, alpha, beta, phi, theta, psi, p, q, r, alt, power;
+  double amach, qbar, cpow;
+  double t, dail, drdr;
+  double cxt, cyt, czt, clt, cmt, cnt;
+  double tvt, b2v, cq;
+  double t1, t2, t3, s1, s2, s3, s4, s5, s6, s7, s8;
+  double cbta, u, v, w, sth, cth, sph, cph, spsi, cpsi, qs, qsb, rmqs, gcth, qsph, ay, az;
+  double udot, vdot, wdot, dum;
 
-  boost::array<float, 9> d;
+  boost::array<double, 9> d;
 
   thtlc = uinput[0];
   el = uinput[1];
@@ -66,21 +66,21 @@ void F16Plant::subf16_model(const f16_state_type &x,
     cmt = cm(alpha, el);
     cnt = cn(alpha, beta) + dnda(alpha, beta) * dail + dndr(alpha, beta) * drdr;
   } else if (model_type == MORELLI) {
-    /* TODO */
-    cxt = 0.0f;
-    cyt = 0.0f;
-    czt = 0.0f;
-    cz(alpha, beta, el);
 
-    clt = 0.0f;
-    cmt = 0.0f;
-    cnt = 0.0f;
+    boost::array<double, 6> mret= morelli(alpha*M_PI/180.0, beta*M_PI/180.0, el*M_PI/180.0, ail*M_PI/180.0, rdr*M_PI/180.0,
+                                                  p, q, r, F16Val.cbar, F16Val.b, vt, F16Val.xcg, F16Val.xcgr);
+    cxt = mret[0];
+    cyt = mret[1];
+    czt = mret[2];
+
+    clt = mret[3];
+    cmt = mret[4];
+    cnt = mret[5];
 
   } else {
     cxt = 0.0f;
     cyt = 0.0f;
     czt = 0.0f;
-    cz(alpha, beta, el);
 
     clt = 0.0f;
     cmt = 0.0f;
@@ -153,5 +153,22 @@ void F16Plant::subf16_model(const f16_state_type &x,
   dxdt[9] = u * s1 + v * s3 + w * s6;
   dxdt[10] = u * s2 + v * s4 + w * s7;
   dxdt[11] = u * sth - v * s5 - w * s8;
+
+  /* a little bit of output stuff */
+  const double xa = 15.0;
+  az = az-xa * dxdt[7];
+  if (adjust_cy) {
+    ay = ay+xa*dxdt[8];
+  }
+
+  float Nz, Ny;
+  Nz = (-az / F16Val.g) - 1.0;
+  Ny = ay / F16Val.g;
+
+  dxdt[13] = Nz;
+  dxdt[14] = Ny;
+  dxdt[15] = az;
+  dxdt[16] = ay;
+  
 }
 }
