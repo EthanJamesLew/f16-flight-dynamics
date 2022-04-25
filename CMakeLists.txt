@@ -14,7 +14,8 @@ set(CMAKE_CXX_FLAGS "-Wall")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
-find_package(Boost 1.71 COMPONENTS numpy REQUIRED)
+# boost requirement
+find_package(Boost COMPONENTS numpy REQUIRED)
 
 # main library
 add_subdirectory(src)

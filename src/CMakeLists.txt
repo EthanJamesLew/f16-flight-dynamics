@@ -10,7 +10,8 @@ install(DIRECTORY f16_flight_dynamics/ DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/
         REGEX "/tests$" EXCLUDE)
 
 
-
+# include directories
+include_directories(${Boost_INCLUDE_DIRS})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 # collect source code and add it to the library
