@@ -13,9 +13,9 @@
 
 
 ## Overview
-This repo contains an fast and efficient implementation of the aircraft model described in Stevens and Lewis 
-"Aircraft Control and Simulation", 3rd Ed. written in C++. The project builds a shared library `f16_flight_dynamics`
-as well as a python module called `f16dynamics` that accesses it via python bindings. The python module provides drop-in 
+This repo contains an efficient implementation of the aircraft model described in Stevens and Lewis 
+"Aircraft Control and Simulation",3rd Ed., written in C++. The project produces a shared library `f16_flight_dynamics`
+as well as the python module `f16dynamics` that accesses it via python bindings. The python module provides drop-in 
 replacement objects / functions for the same models implemented in [AeroBenchVVPython](https://github.com/stanleybak/AeroBenchVVPython) 
 and [F16 CSAF](https://pypi.org/project/csaf-controls/).
 
