@@ -1,0 +1,33 @@
+{% set name = "f16dynamics" %}
+{% set version = "0.1.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/EthanJamesLew/f16-flight-dynamics/archive/refs/heads/main.zip
+
+build:
+  script: {{ PYTHON }} -m pip install . -vv
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+    - cmake
+    - boost
+  host:
+    - python
+    - pip
+    - scikit-build
+    - pybind11
+    - ninja
+  run:
+    - python
+
+
+about:
+  home: https://github.com/EthanJamesLew/f16-flight-dynamics
+  license: GPLv3
+  summary: 'F-16 Aircraft Dynamics Model from Stevens and Lewis "Aircraft Control and Simulation".'
