@@ -35,12 +35,12 @@ based on a common aircraft model with additional controllers placed on top of it
 Benchmarks were run on the following scenarios
 * *GCAS Scenario* - A GCAS autopilot was installed on a single f16 and placed at low altitude. The simulation is run 
 for 2 minutes.
-* *ACAS Xu Scenario* - An ACAS Xu autopilot was installed on a single f16 and placed near an intruder f16 heading towards
-it (2 f16 plants in total). The simulation is run for 2 minutes. 
+* *ACAS Scenario* - An ACAS autopilot, being a NN compressed early prototype of ACAS Xu, was installed on a single f16 
+and placed near an intruder f16 heading towards it (2 f16 plants in total). The simulation is run for 2 minutes. 
 
 See [this notebook](./notebooks/CSAF_Integration.ipynb) for more.
 
-|                          | GCAS Scenario | ACAS Xu Scenario |
+|                          | GCAS Scenario | ACAS Scenario    |
 |--------------------------|---------------|------------------|
 | **F16Dynamics (ours)**   | **0.618 s**   | **1.431 s**      |
 | CSAF F16 - numba enabled | 3.990 s       | 4.68 s           |
