@@ -50,10 +50,11 @@ See [this notebook](./notebooks/CSAF_Integration.ipynb) for more.
 
 ### `f16dynamics` Python Module
 
+#### pip
 The C++ library uses Boost and will not build unless it's installed. A simple way to install boost, using common
 python tools, is via `conda`
 ```shell
-conda install -c conda-forge boost
+conda install -c conda-forge boost==1.76
 ```
 
 Now clone the repository and install the python module
