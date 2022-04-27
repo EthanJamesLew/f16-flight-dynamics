@@ -1,3 +1,12 @@
+# install headers so we can reference them differently in the cpp files
+install(DIRECTORY ../python-bindings DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/python-bindings"
+        COMPONENT python-bindings
+        FILES_MATCHING
+        PATTERN "*.h"
+        REGEX "/src$" EXCLUDE
+        REGEX "/doc$" EXCLUDE
+        REGEX "/tests$" EXCLUDE)
+
 # set the python project module
 # you'll need to setup the boost macro for this too
 set(PYPROJECTNAME f16dynpy)
@@ -8,7 +17,11 @@ set(CMAKE_SHARED_LIBRARY_PREFIX "")
 find_package(Boost COMPONENTS python REQUIRED)
 find_package(PythonLibs REQUIRED)
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/..)
 include_directories(${PYTHON_INCLUDE_DIRS})
+
+# collect source code and add it to the library
+file(GLOB_RECURSE PB_SOURCE_CODE ./*.cpp)
 
 
 if(DEFINED SKBUILD)
@@ -23,7 +36,7 @@ if(DEFINED SKBUILD)
 
     # make this into a python module
     pybind11_add_module(${PYPROJECTNAME} MODULE
-            PyBinding.cpp)
+            ${PB_SOURCE_CODE})
 
     # link to the shared objects
     target_link_libraries(${PYPROJECTNAME} PUBLIC ${PROJECT_NAME} Boost::python Boost::numpy)
@@ -54,6 +67,6 @@ if(DEFINED SKBUILD)
     endif()
 else()
     # build and link
-    add_library(${PYPROJECTNAME} SHARED PyBinding.cpp)
+    add_library(${PYPROJECTNAME} SHARED ${PB_SOURCE_CODE})
     target_link_libraries(${PYPROJECTNAME} ${PROJECT_NAME} ${PYTHON_LIBRARIES} Boost::python Boost::numpy)
 endif()
