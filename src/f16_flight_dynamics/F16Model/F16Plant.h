@@ -7,15 +7,10 @@
 
 #include <boost/array.hpp>
 
+#include <f16_flight_dynamics/F16Model/F16Types.h>
+
 namespace F16Components {
-/* sized array to store aircraft state */
-typedef boost::array<double, 13> f16_state_type;
-
-/* sized array to store aircraft state + output */
-typedef boost::array<double, 17> f16_full_type;
-
-/* sized array to store aircraft input */
-typedef boost::array<double, 4> f16_input_type;
+using namespace F16Types;
 
 /*
  * a data structure of constants - maybe want to have the user configure this?
@@ -45,8 +40,7 @@ F16PlantParameters F16Val = F16PlantParameters();
 
 /* enumerate the possible engine models */
 enum EngineModelType {
-  STEVENS,
-  MORELLI
+  STEVENS, MORELLI
 };
 
 /*

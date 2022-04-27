@@ -1,7 +1,6 @@
 //
 // Created by elew on 4/23/22.
 //
-
 #include <f16_flight_dynamics/F16Model/F16Plant.h>
 #include <f16_flight_dynamics/F16Model/LowLevelFunctions.h>
 #include <math.h>
@@ -67,8 +66,19 @@ void F16Plant::subf16_model(const f16_state_type &x,
     cnt = cn(alpha, beta) + dnda(alpha, beta) * dail + dndr(alpha, beta) * drdr;
   } else if (model_type == MORELLI) {
 
-    boost::array<double, 6> mret= morelli(alpha*M_PI/180.0, beta*M_PI/180.0, el*M_PI/180.0, ail*M_PI/180.0, rdr*M_PI/180.0,
-                                                  p, q, r, F16Val.cbar, F16Val.b, vt, F16Val.xcg, F16Val.xcgr);
+    boost::array<double, 6> mret = morelli(alpha * M_PI / 180.0,
+                                           beta * M_PI / 180.0,
+                                           el * M_PI / 180.0,
+                                           ail * M_PI / 180.0,
+                                           rdr * M_PI / 180.0,
+                                           p,
+                                           q,
+                                           r,
+                                           F16Val.cbar,
+                                           F16Val.b,
+                                           vt,
+                                           F16Val.xcg,
+                                           F16Val.xcgr);
     cxt = mret[0];
     cyt = mret[1];
     czt = mret[2];
@@ -156,9 +166,9 @@ void F16Plant::subf16_model(const f16_state_type &x,
 
   /* a little bit of output stuff */
   const double xa = 15.0;
-  az = az-xa * dxdt[7];
+  az = az - xa * dxdt[7];
   if (adjust_cy) {
-    ay = ay+xa*dxdt[8];
+    ay = ay + xa * dxdt[8];
   }
 
   float Nz, Ny;
@@ -169,6 +179,6 @@ void F16Plant::subf16_model(const f16_state_type &x,
   dxdt[14] = Ny;
   dxdt[15] = az;
   dxdt[16] = ay;
-  
+
 }
 }
