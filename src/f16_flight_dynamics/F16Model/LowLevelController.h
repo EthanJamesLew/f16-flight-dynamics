@@ -26,7 +26,7 @@ using namespace F16Types;
 class LowLevelController : public Component::ComponentBase<llc_input_type, llc_state_type, llc_output_type> {
  public:
   /* trim constructor */
-  LowLevelController(f16_state_type state_trim, llc_input_type control_trim);
+  LowLevelController(f16_state_type state_trim, llc_output_type control_trim);
 
   /* defaults */
   LowLevelController();
@@ -39,10 +39,10 @@ class LowLevelController : public Component::ComponentBase<llc_input_type, llc_s
 
  private:
   f16_state_type xequil;
-  llc_input_type uequil;
+  llc_output_type uequil;
   matrixd lqr_gain;
 
-  inline matrixd reorder_xctrl(const f16_full_type &state);
+  inline matrixd reorder_xctrl(const f16_state_type &state, const llc_state_type &cstate);
   inline matrixd build_lqr();
 
 };
