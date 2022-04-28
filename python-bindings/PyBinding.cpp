@@ -5,10 +5,18 @@
 #include <boost/python/numpy.hpp>
 #include <f16_flight_dynamics/F16Model/LowLevelFunctions.h>
 #include <python-bindings/F16PlantWrapper.h>
-#include <python-bindings/LowLevelControllerWrapper.h>
+#include <python-bindings/ComponentWrapper.h>
+#include <f16_flight_dynamics/F16Model/LowLevelController.h>
+//#include <python-bindings/LowLevelControllerWrapper.h>
 
 namespace py = boost::python;
 namespace numpy = boost::python::numpy;
+
+class LowLevelControllerWrapper : public ComponentWrapper<LowLevelController::LowLevelController,
+                                                          F16Types::llc_input_type,
+                                                          F16Types::llc_state_type,
+                                                          F16Types::llc_output_type> {
+};
 
 void init_module() {
 }
