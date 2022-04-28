@@ -11,6 +11,7 @@
 #include <boost/numeric/ublas/vector.hpp>
 
 #include <f16_flight_dynamics/F16Model/F16Types.h>
+#include <f16_flight_dynamics/Component/Component.h>
 
 using namespace boost::numeric::ublas;
 
@@ -22,34 +23,7 @@ namespace LowLevelController {
 
 using namespace F16Types;
 
-/* state index names */
-enum F16StateIdxs {
-  vt = 0,
-  alpha = 1,
-  beta = 2,
-  phi = 3,
-  theta = 4,
-  psi = 5,
-  p = 6,
-  q = 7,
-  r = 8,
-  pn = 9,
-  pe = 10,
-  h = 11,
-  power = 12,
-  nz = 13,
-  ny = 14,
-  az = 15,
-  ay = 16
-} F16StateIdxs;
-
-/* aircraft trim state */
-f16_state_type default_xequil = {502.0, 0.0389, 0.0, 0.0, 0.0389, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1000.0, 9.0567};
-
-/* control trim input */
-llc_input_type default_uequil = {0.1395, -0.7496, 0.0, 0.0};
-
-class LowLevelController {
+class LowLevelController : public Component::ComponentBase<llc_input_type, llc_state_type, llc_output_type> {
  public:
   /* trim constructor */
   LowLevelController(f16_state_type state_trim, llc_input_type control_trim);
@@ -58,10 +32,10 @@ class LowLevelController {
   LowLevelController();
 
   /* llc u_deg output */
-  llc_input_type output(const llc_input_type &u_ref, const f16_full_type &f16_state);
+  void output(double time, const llc_state_type &state, llc_output_type &output, const llc_input_type &input);
 
   /* llc state update */
-  llc_state_type dxdt(const llc_input_type &u_ref, const f16_full_type &f_16_state);
+  void update(double time, const llc_state_type &state, llc_state_type &state_up, const llc_input_type &input);
 
  private:
   f16_state_type xequil;

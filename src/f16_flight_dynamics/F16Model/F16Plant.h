@@ -36,8 +36,6 @@ struct F16PlantParameters {
   const double g = 32.17f;
 };
 
-F16PlantParameters F16Val = F16PlantParameters();
-
 /* enumerate the possible engine models */
 enum EngineModelType {
   STEVENS, MORELLI

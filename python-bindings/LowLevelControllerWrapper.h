@@ -18,9 +18,9 @@ class LowLevelControllerWrapper {
   LowLevelControllerWrapper();
 
   /* evolution function (der) */
-  numpy::ndarray dxdt(const numpy::ndarray &f16_state, const numpy::ndarray &u);
+  numpy::ndarray dxdt(const numpy::ndarray &state, const numpy::ndarray &u);
 
-  numpy::ndarray output(const numpy::ndarray &f16_state, const numpy::ndarray &u);
+  numpy::ndarray output(const numpy::ndarray &state, const numpy::ndarray &u);
 
  private:
   LowLevelController::LowLevelController llc;

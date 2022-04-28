@@ -17,7 +17,8 @@ typedef boost::array<double, 17> f16_full_type;
 typedef boost::array<double, 4> f16_input_type;
 
 /* sized array of llc i/o */
-typedef boost::array<double, 4> llc_input_type;
+typedef boost::array<double, 21> llc_input_type;
+typedef boost::array<double, 4> llc_output_type;
 
 /* sized array of llc state */
 typedef boost::array<double, 3> llc_state_type;

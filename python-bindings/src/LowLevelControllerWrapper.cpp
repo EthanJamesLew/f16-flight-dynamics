@@ -3,40 +3,31 @@
 //
 #include <python-bindings/PyTypeConvert.h>
 #include <f16_flight_dynamics/F16Model/F16Types.h>
-#include <boost/python.hpp>
-#include <boost/python/numpy.hpp>
-#include <f16_flight_dynamics/F16Model/LowLevelController.h>
-
-namespace py = boost::python;
-namespace numpy = boost::python::numpy;
+#include <python-bindings/LowLevelControllerWrapper.h>
 
 /* python object for llc */
-class LowLevelControllerWrapper {
- public:
-  LowLevelControllerWrapper() {
-    llc = LowLevelController::LowLevelController();
-  }
+LowLevelControllerWrapper::LowLevelControllerWrapper() {
+  llc = LowLevelController::LowLevelController();
+}
 
-  /* evolution function (der) */
-  numpy::ndarray dxdt(const numpy::ndarray &f16_state, const numpy::ndarray &u) {
-    F16Types::llc_input_type ua = PyTypeConvert::ndarray_to_array<double, 4>(u);
-    F16Types::f16_full_type xa = PyTypeConvert::ndarray_to_array<double, 17>(f16_state);
+/* evolution function (der) */
+numpy::ndarray LowLevelControllerWrapper::dxdt(const numpy::ndarray &state, const numpy::ndarray &u) {
+  F16Types::llc_state_type xd;
+  F16Types::llc_state_type xa = PyTypeConvert::ndarray_to_array<double, F16Types::llc_state_type::size()>(state);
+  F16Types::llc_input_type ua = PyTypeConvert::ndarray_to_array<double, F16Types::llc_input_type::size()>(u);
 
-    auto xd = llc.dxdt(ua, xa);
+  llc.update(0.0, xa, xd, ua);
 
-    return PyTypeConvert::array_to_ndarray<double, 3>(xd);
-  }
+  return PyTypeConvert::array_to_ndarray<double, F16Types::llc_state_type::size()>(xd);
+}
 
-  numpy::ndarray output(const numpy::ndarray &f16_state, const numpy::ndarray &u) {
-    F16Types::llc_input_type ua = PyTypeConvert::ndarray_to_array<double, 4>(u);
-    F16Types::f16_full_type xa = PyTypeConvert::ndarray_to_array<double, 17>(f16_state);
+numpy::ndarray LowLevelControllerWrapper::output(const numpy::ndarray &state, const numpy::ndarray &u) {
+  F16Types::llc_output_type xd;
+  F16Types::llc_state_type xa = PyTypeConvert::ndarray_to_array<double, F16Types::llc_state_type::size()>(state);
+  F16Types::llc_input_type ua = PyTypeConvert::ndarray_to_array<double, F16Types::llc_input_type::size()>(u);
 
-    auto xd = llc.output(ua, xa);
+  llc.output(0.0, xa, xd, ua);
 
-    return PyTypeConvert::array_to_ndarray<double, 4>(xd);
-  }
+  return PyTypeConvert::array_to_ndarray<double, F16Types::llc_output_type::size()>(xd);
+}
 
- private:
-  LowLevelController::LowLevelController llc;
-
-};

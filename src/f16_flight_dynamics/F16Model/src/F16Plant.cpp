@@ -8,6 +8,8 @@
 namespace F16Components {
 using namespace LowLevelFunctions;
 
+F16PlantParameters F16Val = F16PlantParameters();
+
 void F16Plant::subf16_model(const f16_state_type &x,
                             const f16_input_type &uinput,
                             f16_full_type &dxdt,

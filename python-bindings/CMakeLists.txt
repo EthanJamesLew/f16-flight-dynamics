@@ -1,5 +1,9 @@
+# set the python project module
+# you'll need to setup the boost macro for this too
+set(PYPROJECTNAME f16dynpy)
+
 # install headers so we can reference them differently in the cpp files
-install(DIRECTORY ../python-bindings DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/python-bindings"
+install(DIRECTORY ../python-bindings DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/${PYPROJECTNAME}"
         COMPONENT python-bindings
         FILES_MATCHING
         PATTERN "*.h"
@@ -7,9 +11,6 @@ install(DIRECTORY ../python-bindings DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/py
         REGEX "/doc$" EXCLUDE
         REGEX "/tests$" EXCLUDE)
 
-# set the python project module
-# you'll need to setup the boost macro for this too
-set(PYPROJECTNAME f16dynpy)
 # stop cmake from prefixing with the name lib
 set(CMAKE_SHARED_LIBRARY_PREFIX "")
 
