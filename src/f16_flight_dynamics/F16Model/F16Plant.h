@@ -7,15 +7,11 @@
 
 #include <boost/array.hpp>
 
+#include <f16_flight_dynamics/F16Model/F16Types.h>
+#include <f16_flight_dynamics/Component/Component.h>
+
 namespace F16Components {
-/* sized array to store aircraft state */
-typedef boost::array<double, 13> f16_state_type;
-
-/* sized array to store aircraft state + output */
-typedef boost::array<double, 17> f16_full_type;
-
-/* sized array to store aircraft input */
-typedef boost::array<double, 4> f16_input_type;
+using namespace F16Types;
 
 /*
  * a data structure of constants - maybe want to have the user configure this?
@@ -41,12 +37,9 @@ struct F16PlantParameters {
   const double g = 32.17f;
 };
 
-F16PlantParameters F16Val = F16PlantParameters();
-
 /* enumerate the possible engine models */
 enum EngineModelType {
-  STEVENS,
-  MORELLI
+  STEVENS, MORELLI
 };
 
 /*
@@ -55,9 +48,15 @@ enum EngineModelType {
  * The F16 is an unstable "fly by wire" aircraft. When uncontrolled, expect unstable
  * behavior.
  */
-class F16Plant {
+ class F16Plant: public Component::ComponentBase<f16_input_type, f16_state_type, f16_output_type> {
  public:
-  /*
+   /* plant output */
+   void output(double time, const f16_state_type &state, f16_output_type &output, const f16_input_type &input);
+
+   /* plant state update */
+   void update(double time, const f16_state_type &state, f16_state_type &state_up, const f16_input_type &input);
+
+   /*
    * output aircraft state vector derivative for a given input
    * The reference for the model is Appendix A of Stevens & Lewis
    */
