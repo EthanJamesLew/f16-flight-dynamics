@@ -8,6 +8,7 @@
 #include <boost/array.hpp>
 
 #include <f16_flight_dynamics/F16Model/F16Types.h>
+#include <f16_flight_dynamics/Component/Component.h>
 
 namespace F16Components {
 using namespace F16Types;
@@ -47,9 +48,15 @@ enum EngineModelType {
  * The F16 is an unstable "fly by wire" aircraft. When uncontrolled, expect unstable
  * behavior.
  */
-class F16Plant {
+ class F16Plant: public Component::ComponentBase<f16_input_type, f16_state_type, f16_output_type> {
  public:
-  /*
+   /* plant output */
+   void output(double time, const f16_state_type &state, f16_output_type &output, const f16_input_type &input);
+
+   /* plant state update */
+   void update(double time, const f16_state_type &state, f16_state_type &state_up, const f16_input_type &input);
+
+   /*
    * output aircraft state vector derivative for a given input
    * The reference for the model is Appendix A of Stevens & Lewis
    */

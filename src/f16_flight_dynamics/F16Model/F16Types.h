@@ -10,6 +10,9 @@ namespace F16Types {
 /* sized array to store aircraft state */
 typedef boost::array<double, 13> f16_state_type;
 
+/* sized array to store aircraft output */
+typedef boost::array<double, 4> f16_output_type;
+
 /* sized array to store aircraft state + output */
 typedef boost::array<double, 17> f16_full_type;
 

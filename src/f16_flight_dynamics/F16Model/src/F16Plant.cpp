@@ -10,6 +10,24 @@ using namespace LowLevelFunctions;
 
 F16PlantParameters F16Val = F16PlantParameters();
 
+/* plant output */
+void F16Plant::output(double time, const f16_state_type &state, f16_output_type &output, const f16_input_type &input){
+  f16_full_type xd{};
+  subf16_model(state, input, xd, MORELLI, true);
+  //std::copy(xd.begin() + f16_state_type::size(), xd.end(), output.begin());
+  for (size_t idx = f16_state_type::size(); idx < xd.size(); idx++)
+    output[idx - f16_state_type::size()] = xd[idx];
+}
+
+/* plant state update */
+void F16Plant::update(double time, const f16_state_type &state, f16_state_type &state_up, const f16_input_type &input){
+  f16_full_type xd{};
+  subf16_model(state, input, xd, MORELLI, true);
+  //std::copy(xd.begin(), xd.begin() + f16_state_type::size(), state_up.begin());
+  for (size_t idx = 0; idx < f16_state_type::size(); idx++)
+    state_up[idx] = xd[idx];
+}
+
 void F16Plant::subf16_model(const f16_state_type &x,
                             const f16_input_type &uinput,
                             f16_full_type &dxdt,

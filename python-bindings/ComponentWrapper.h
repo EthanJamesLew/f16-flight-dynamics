@@ -40,7 +40,7 @@ ComponentWrapper<C, In, State, Out>::ComponentWrapper() {
 /* wrapped evolution function */
 template<typename C, typename In, typename State, typename Out>
 numpy::ndarray ComponentWrapper<C, In, State, Out>::dxdt(const numpy::ndarray &state, const numpy::ndarray &u) {
-  State xd;
+  State xd{};
   State xa = PyTypeConvert::ndarray_to_array<double, State::size()>(state);
   In ua = PyTypeConvert::ndarray_to_array<double, In::size()>(u);
 
@@ -53,7 +53,7 @@ numpy::ndarray ComponentWrapper<C, In, State, Out>::dxdt(const numpy::ndarray &s
 /* wrapped output function */
 template<typename C, typename In, typename State, typename Out>
 numpy::ndarray ComponentWrapper<C, In, State, Out>::output(const numpy::ndarray &state, const numpy::ndarray &u) {
-  Out xd;
+  Out xd{};
   State xa = PyTypeConvert::ndarray_to_array<double, State::size()>(state);
   In ua = PyTypeConvert::ndarray_to_array<double, In::size()>(u);
 
