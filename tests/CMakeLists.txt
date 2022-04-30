@@ -25,3 +25,5 @@ gtest_discover_tests(core_tests)
 # now allow it to be accessed
 enable_testing()
 add_test(NAME CoreTests COMMAND core_tests)
+add_test(NAME PythonBindingTests COMMAND pytest tests/ WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
+
