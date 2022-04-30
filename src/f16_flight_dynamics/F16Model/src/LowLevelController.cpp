@@ -46,10 +46,13 @@ enum F16StateIdxs {
 } F16StateIdxs;
 
 /* aircraft trim state */
-f16_state_type default_xequil = {502.0, 0.0389, 0.0, 0.0, 0.0389, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1000.0, 9.0567};
+//f16_state_type default_xequil = {502.0, 0.0389, 0.0, 0.0, 0.0389, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1000.0, 9.0567};
+f16_state_type default_xequil = {502.0, 0.03887505597600522, 0.0, 0.0, 0.03887505597600522, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1000.0,
+                                 9.05666543872074};
 
 /* control trim input */
-llc_output_type default_uequil = {0.1395, -0.7496, 0.0, 0.0};
+//llc_output_type default_uequil = {0.1395, -0.7496, 0.0, 0.0};
+llc_output_type default_uequil = {0.13946204864060271, -0.7495784725828754, 0.0, 0.0};
 
 LowLevelController::LowLevelController() {
   xequil = default_xequil;

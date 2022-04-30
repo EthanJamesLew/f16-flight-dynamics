@@ -82,11 +82,17 @@ sudo make install
 
 ## Tests
 
-Proper testing is TBD, with the coverage 
-* `f16_flight_dynamics` C++ unit tests
-* `f16dynamics` python unit tests
-* Testing the C++ dynamics against the VVaerobench implementation and CSAF
-* Integration testing with VVaerobench and CSAF
+### Core Unit Tests
+CMake will download GoogleTest for unit testing the C++ pieces. Under the `<CMake build folder>/test`, run
+```shell
+ctest
+```
+
+### Integration Tests
+Python bindings require pytest. Run
+```shell
+pytest
+```
 
 ## Jupyter Notebooks
 

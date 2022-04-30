@@ -22,3 +22,6 @@ add_subdirectory(src)
 
 # python library
 add_subdirectory(python-bindings)
+
+# tests
+add_subdirectory(tests)
