@@ -21,3 +21,7 @@ target_link_libraries(
 
 include(GoogleTest)
 gtest_discover_tests(core_tests)
+
+# now allow it to be accessed
+enable_testing()
+add_test(NAME CoreTests COMMAND core_tests)
