@@ -48,6 +48,24 @@ See [this notebook](./notebooks/CSAF_Integration.ipynb) for more.
 
 ## Installation
 
+### Docker (easiest)
+
+Build the docker at the repo root via
+```shell
+docker build . -t f16dynamics
+```
+Note that this build may take a few minutes to get the build dependencies together.
+
+Running without any arguments will put you in a python REPL with `csaf` and the `f16dynamics` library
+```shell
+docker run -it f16dynamics
+```
+
+Run a script with
+```shell
+docker run -v $PWD:/mydir f16dynamics /mydir/myscript.py
+```
+
 ### `f16dynamics` Python Module
 
 #### pip
