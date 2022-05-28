@@ -4,21 +4,18 @@
 # did not work out of the box because of a strange GCC 10 issue,
 # which was resolved by reverting to GCC 8
 from ubuntu:21.04
-RUN apt update
-RUN apt install -y git curl
+RUN apt-get update &&\
+    apt-get install -y git curl
 ARG DEBIAN_FRONTEND=noninteractive
 
 # install python and boost
-RUN apt install -yq python3 python3-pip
-RUN apt install -yq libboost1.74-all-dev
-
 # because of this bs, we have to use an alternative gcc/g++
 # https://github.com/boostorg/ublas/issues/96
-RUN apt install -yq gcc-8 g++-8
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 8
-RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 8
-RUN update-alternatives --config g++
-RUN update-alternatives --config gcc
+RUN apt-get install -yq python3 python3-pip libboost1.74-all-dev gcc-8 g++-8 &&\
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 8 &&\
+    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 8 &&\
+    update-alternatives --config g++ &&\
+    update-alternatives --config gcc
 
 # clone the optimized C++ F16 Model and install the python pieces
 ADD . /f16-flight-dynamics
@@ -27,8 +24,8 @@ RUN pip install .
 WORKDIR /
 
 # now, install CSAF from PyPi
-RUN pip install csaf-controls
-RUN apt install -yq graphviz
+RUN pip install csaf-controls &&\
+    apt-get install -yq graphviz
 
 # default is to provide a python3 environment
 CMD ["python3"]
