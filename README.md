@@ -1,5 +1,6 @@
 # f16-flight-dynamics
 ![CMake](https://github.com/EthanJamesLew/f16-flight-dynamics/actions/workflows/cmake.yml/badge.svg)
+![Docker](https://github.com/EthanJamesLew/f16-flight-dynamics/actions/workflows/docker-image.yml/badge.svg)
 
 ![FlightGear Render](./docs/img/flightgear_render.png)
 
